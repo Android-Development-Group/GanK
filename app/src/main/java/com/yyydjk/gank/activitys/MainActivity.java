@@ -48,36 +48,37 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import me.xiaopan.android.content.res.DimenUtils;
 import me.xiaopan.android.preference.PreferencesUtils;
 
 public class MainActivity extends BaseActivity implements ColorChooserDialog.ColorCallback {
+    private Unbinder unbinder;
 
-
-    @Bind(R.id.avatar) ImageView mAvatar;
-    @Bind(R.id.desc) TextView mDesc;
-    @Bind(R.id.all) TextView mAll;
-    @Bind(R.id.fuli) TextView mFuli;
-    @Bind(R.id.android) TextView mAndroid;
-    @Bind(R.id.ios) TextView mIos;
-    @Bind(R.id.video) TextView mVideo;
-    @Bind(R.id.front) TextView mFront;
-    @Bind(R.id.resource) TextView mResource;
-    @Bind(R.id.app) TextView mApp;
-    @Bind(R.id.more) TextView mMore;
-    @Bind(R.id.scrollView) ScrollView mScrollView;
-    @Bind(R.id.about) TextView mAbout;
-    @Bind(R.id.theme) TextView mTheme;
-    @Bind(R.id.menu) ColorRelativeLayout mMenu;
-    @Bind(R.id.status_bar) ColorView mStatusBar;
-    @Bind(R.id.icon) ImageView mIcon;
-    @Bind(R.id.title) TextView mTitle;
-    @Bind(R.id.container) FrameLayout mContainer;
-    @Bind(R.id.resideLayout) ResideLayout mResideLayout;
+    @BindView(R.id.avatar) ImageView mAvatar;
+    @BindView(R.id.desc) TextView mDesc;
+    @BindView(R.id.all) TextView mAll;
+    @BindView(R.id.fuli) TextView mFuli;
+    @BindView(R.id.android) TextView mAndroid;
+    @BindView(R.id.ios) TextView mIos;
+    @BindView(R.id.video) TextView mVideo;
+    @BindView(R.id.front) TextView mFront;
+    @BindView(R.id.resource) TextView mResource;
+    @BindView(R.id.app) TextView mApp;
+    @BindView(R.id.more) TextView mMore;
+    @BindView(R.id.scrollView) ScrollView mScrollView;
+    @BindView(R.id.about) TextView mAbout;
+    @BindView(R.id.theme) TextView mTheme;
+    @BindView(R.id.menu) ColorRelativeLayout mMenu;
+    @BindView(R.id.status_bar) ColorView mStatusBar;
+    @BindView(R.id.icon) ImageView mIcon;
+    @BindView(R.id.title) TextView mTitle;
+    @BindView(R.id.container) FrameLayout mContainer;
+    @BindView(R.id.resideLayout) ResideLayout mResideLayout;
 
     private FragmentManager fragmentManager;
     private String currentFragmentTag;
@@ -86,7 +87,7 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         fragmentManager = getSupportFragmentManager();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -199,6 +200,11 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
         currentFragmentTag = name;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (unbinder != null) unbinder.unbind();
+    }
 
     @Override
     public void onBackPressed() {

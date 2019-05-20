@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 
@@ -37,9 +37,9 @@ import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
  */
 public abstract class BaseListFragment<T> extends BaseFragment implements OnRefreshListener, OnLoadMoreListener {
 
-    @Bind(R.id.swipe_target) protected RecyclerView mRecyclerView;
-    @Bind(R.id.content_view) SwipeToLoadLayout mSwipeToLoadLayout;
-    @Bind(R.id.multipleStatusView) MultipleStatusView mMultipleStatusView;
+    @BindView(R.id.swipe_target) protected RecyclerView mRecyclerView;
+    @BindView(R.id.content_view) SwipeToLoadLayout mSwipeToLoadLayout;
+    @BindView(R.id.multipleStatusView) MultipleStatusView mMultipleStatusView;
     protected CommonAdapter<T> commonAdapter;
     protected HeaderAndFooterWrapper headerAndFooterWrapper;
     protected List<T> list = new ArrayList<>();
@@ -167,13 +167,6 @@ public abstract class BaseListFragment<T> extends BaseFragment implements OnRefr
             }
         });
 
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @Override

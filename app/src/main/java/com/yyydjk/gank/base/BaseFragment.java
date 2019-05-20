@@ -13,6 +13,7 @@ import com.yyydjk.gank.http.RequestManager;
 import java.util.UUID;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by dongjunkun on 2016/2/2.
@@ -23,6 +24,7 @@ public abstract class BaseFragment extends Fragment {
 
     private boolean isViewPrepared; // 标识fragment视图已经初始化完毕
     private boolean hasFetchData; // 标识已经触发过懒加载数据
+    private Unbinder unbinder;
 
     protected View mRootView;
     protected abstract
@@ -37,7 +39,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(getLayoutId(), container, false);
-        ButterKnife.bind(this,mRootView);
+        unbinder = ButterKnife.bind(this,mRootView);
         initViews();
         return mRootView;
     }
@@ -69,7 +71,7 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroyView();
         hasFetchData = false;
         isViewPrepared = false;
-        ButterKnife.unbind(this);
+        if (unbinder != null) unbinder.unbind();
         RequestManager.cancelRequest(tag);
     }
 }

@@ -1,6 +1,7 @@
 package com.yyydjk.gank.widget;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -356,6 +357,7 @@ public class ResideLayout extends ViewGroup {
         mPostedRunnables.clear();
     }
 
+    @SuppressLint("Range")
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
@@ -901,7 +903,7 @@ public class ResideLayout extends ViewGroup {
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
         boolean result;
         final LayoutParams lp = (LayoutParams) child.getLayoutParams();
-        final int save = canvas.save(Canvas.ALL_SAVE_FLAG);
+        final int save = canvas.save();
         if (mCanSlide && !lp.slideable && mSlideableView != null) {
             canvas.scale(1.5f - 0.5f * mSlideOffset, 1.5f - 0.5f * mSlideOffset, child.getRight(), getHeight() / 2);
         } else {
